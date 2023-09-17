@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // This is team member Hildur Bjarkadóttir
 // Main application
+// mag
+// ragga
+
 
 @SpringBootApplication
 public class Hbv501GTeam4Application {
