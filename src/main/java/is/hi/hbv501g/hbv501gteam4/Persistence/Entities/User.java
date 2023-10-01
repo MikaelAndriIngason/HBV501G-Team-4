@@ -1,4 +1,4 @@
-package is.hi.hbv501g.hbv501gteam4.Entities;
+package is.hi.hbv501g.hbv501gteam4.Persistence.Entities;
 
 import jakarta.persistence.*;
 

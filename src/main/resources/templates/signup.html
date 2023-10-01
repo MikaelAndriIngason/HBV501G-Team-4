@@ -1,40 +1,40 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/styles.css">
-        <title>Sign up</title>
-    </head>
-    <body>
-        <main>
-            <h2>Sign up</h2>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Sign up</title>
+</head>
+<body>
+<main>
+    <h2>Sign up</h2>
 
-            <form method="post" class="user-form" action="/signup">
-                <label for="name-input">
-                    Name:
-                    <input type="text" id="name-input" name="name" required>
-                </label>
+    <form method="post" class="user-form" action="/signup" th:object="${user}">
+        <label for="name-input">
+            Name:
+            <input type="text" id="name-input" name="name" required th:field="*{name}">
+        </label>
 
-                <label for="email-input">
-                    Email:
-                    <input type="email" id="email-input" name="email" required>
-                </label>
+        <label for="email-input">
+            Email:
+            <input type="email" id="email-input" name="email" required th:field="*{email}">
+        </label>
 
-                <label for="password-input">
-                    Password:
-                    <input type="password" id="password-input" name="password" required>
-                </label>
+        <label for="password-input">
+            Password:
+            <input type="password" id="password-input" name="password" required th:field="*{password}">
+        </label>
 
-                <label for="confirm-password-input">
-                    Confirm password:
-                    <input type="password" id="confirm-password-input" name="confirm-password" required>
-                </label>
+        <label for="confirm-password-input">
+            Confirm password:
+            <input type="password" id="confirm-password-input" name="confirm-password" required>
+        </label>
 
-                <button type="submit" class="form-submit-btn">Sign up</button>
+        <button type="submit" class="form-submit-btn">Sign up</button>
 
-                <p>Already have an account? <a href="/signin">Sign in</a></p>
-            </form>
-        </main>
-    </body>
+        <p>Already have an account? <a href="/login">Sign in</a></p>
+    </form>
+</main>
+</body>
 </html>
