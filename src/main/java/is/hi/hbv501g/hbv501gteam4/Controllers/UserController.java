@@ -42,7 +42,7 @@ public class UserController {
         if(exists != null){
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
-            return "loggedin";
+            return "redirect:/home";
         }
         return "redirect:/";
     }
@@ -81,7 +81,7 @@ public class UserController {
             if(loginUser != null){
                 session.setAttribute("LoggedInUser", loginUser);
                 model.addAttribute("LoggedInUser", loginUser);
-                return "loggedin";
+                return "redirect:/home";
             }
         }
         return "redirect:/";

@@ -45,10 +45,8 @@ public class UserServiceImplementation implements UserService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         User doesExist = findByEmail(user.getEmail());
-        System.out.println(doesExist);
         if(doesExist != null){
             if(passwordEncoder.matches(user.getPassword(), doesExist.getPassword())){
-                System.out.println(user.getPassword());
                 return doesExist;
             }
         }
