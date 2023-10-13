@@ -10,7 +10,7 @@
         <main>
             <h2>Log in</h2>
 
-            <form method="post" class="user-form" action="/login" th:object="${user}">
+            <form method="post"action="/login" th:object="${user}">
                 <label for="email-input">
                     Email:
                     <input type="email" id="email-input" name="email" required th:field="*{email}">

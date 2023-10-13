@@ -9,7 +9,7 @@
 <main>
     <h2>Update Disc</h2>
 
-    <form class="user-form" action="#" th:action="@{/updateDisc}" th:object="${disc}" method="post">
+    <form class="user-form" action="#" th:action="@{/updateDisc}" th:object="${disc}" method="post" enctype="multipart/form-data">
         <input type="text" th:field="*{discID}" id="discID">
 
         <label for="name">Name:</label>
@@ -35,6 +35,33 @@
         <label for="price">Price:</label>
         <input type="text" th:field="*{price}" id="price" >
         <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+
+        <div th:switch="${disc.images}">
+            <p th:case="null">No images yet!</p>
+            <div th:case="*">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="image : ${disc.images}">
+                        <td>
+                            <img th:src="${image.image}" alt="Image" style="max-width:300px;"/>
+                        </td>
+                        <td><a th:href="@{/deleteImage/{id}/{imageId}(id=${disc.discID}, imageId=${image.imageID})}">Delete</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <label for="image">Picture:</label>
+        <input type="file" name="image" id="image" multiple>
+
+
 
         <button type="submit" class="form-submit-btn">Update Disc</button>
     </form>

@@ -2,6 +2,9 @@ package is.hi.hbv501g.hbv501gteam4.Persistence.Entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "discs")
 public class Disc {
@@ -15,6 +18,13 @@ public class Disc {
     private String type;
     private String condition;
     private double price;
+
+    @OneToMany(mappedBy = "disc", cascade = CascadeType.ALL)
+    List<Image> images = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
 
     public long getDiscID() {
         return discID;
@@ -62,5 +72,13 @@ public class Disc {
 
     public double getPrice() {
         return price;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 }

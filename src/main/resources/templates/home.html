@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Home Page</title>
 </head>
 <body>
@@ -11,37 +12,30 @@
     <hr>
     <p th:text="${LoggedInUser.name}"></p>
 
-    <div th:switch="${discs}">
+    <div class="user-form" th:switch="${discs}">
         <h2 th:case="null">No Discs yet!</h2>
         <div th:case="*">
             <h2>Discs</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Type</th>
-                    <th>Condition</th>
-                    <th>Price</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="disc : ${discs}">
-                    <td th:text="${disc.name}"></td>
-                    <td th:text="${disc.description}"></td>
-                    <td th:text="${disc.type}"></td>
-                    <td th:text="${disc.condition}"></td>
-                    <td th:number="${disc.price}"></td>
-                    <td><a th:href="@{/update/{id}(id=${disc.discID})}">Update</a></td>
-                    <td><a th:href="@{/delete/{id}(id=${disc.discID})}">Delete</a></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="card-container">
+                <div th:each="disc : ${discs}" class="card">
+                    <h3 th:text="${disc.name}"></h3>
+                    <div  th:if="${disc.images != null }">
+                        <img th:each="image, iterStat : ${disc.images}" th:if="${iterStat.index == 0}" th:src="${image.image}" alt="Image" style="max-width:250px;"/>
+                    </div>
+                    <p th:text="${disc.description}"></p>
+                    <p>Type: <span th:text="${disc.type}"></span></p>
+                    <p>Condition: <span th:text="${disc.condition}"></span></p>
+                    <p>Price: <span th:text="${disc.price}"></span></p>
+                    <div class="card-links">
+                        <a th:href="@{/update/{id}(id=${disc.discID})}">Update</a>
+                        <a th:href="@{/delete/{id}(id=${disc.discID})}">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <p><a href="/addDisc">Add a new disc</a></p>
         </div>
-        <p><a href="/addDisc">Add a new disc</a></p>
     </div>
+
 </main>
 </body>
 </html>

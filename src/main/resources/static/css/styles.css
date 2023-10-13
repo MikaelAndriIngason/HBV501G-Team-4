@@ -114,3 +114,36 @@ input[type="password"]{
 a {
     color: var(--accent-color)
 }
+
+/* CSS for the card container and cards */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+}
+
+.card-links {
+    margin-top: 10px;
+}
+
+.card-links a {
+    margin-right: 10px;
+}
+
+.card-links a {
+    text-decoration: none;
+    color: var(--accent-color);
+}
+.card-links a:hover {
+    text-decoration: underline;
+}

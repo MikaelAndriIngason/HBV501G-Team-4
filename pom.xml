@@ -34,6 +34,7 @@
 			<artifactId>spring-session-core</artifactId>
 		</dependency>
 
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -49,6 +50,7 @@
 			<artifactId>spring-security-crypto</artifactId>
 			<version>6.0.1</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
