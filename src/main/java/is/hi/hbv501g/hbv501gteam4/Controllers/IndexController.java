@@ -23,12 +23,5 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping("/loggedin")
-    public String indexPageLoggedIn(HttpSession session, Model model) {
-        User sessionUser = (User) session.getAttribute("LoggedInUser");
-        if(sessionUser  != null){
-            model.addAttribute("LoggedInUser", sessionUser);
-        }
-        return "loggedin";
-    }
+
 }

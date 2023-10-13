@@ -10,7 +10,7 @@
         <main>
             <h2>Log in</h2>
 
-            <form method="post" class="user-form" action="/login" th:object="${user}">
+            <form method="post"action="/login" th:object="${user}">
                 <label for="email-input">
                     Email:
                     <input type="email" id="email-input" name="email" required th:field="*{email}">
@@ -21,7 +21,7 @@
                     <input type="password" id="password-input" name="password" required th:field="*{password}">
                 </label>
 
-                <button type="submit" class="form-submit-btn">Sign in</button>
+                <button type="submit" class="form-submit-btn">Log in</button>
 
                 <p>Don't have an account? <a href="/signup">Sign up</a></p>
             </form>
