@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Disc Detail</title>
+</head>
+<body>
+<main>
+    <h2>Disc Detail</h2>
+    <table>
+        <tr>
+            <th>Name:</th>
+            <td th:text="${disc.name}">Disc Name</td>
+        </tr>
+        <tr>
+            <th>Description:</th>
+            <td th:text="${disc.description}">Disc Description</td>
+        </tr>
+        <tr>
+            <th>Type:</th>
+            <td th:text="${disc.type}">Disc Type</td>
+        </tr>
+        <tr>
+            <th>Condition:</th>
+            <td th:text="${disc.condition}">Disc Condition</td>
+        </tr>
+        <tr>
+            <th>Price:</th>
+            <td th:text="${disc.price}">Disc Price</td>
+        </tr>
+    </table>
+
+    <a th:href="@{/disc/{id}/update(id=${disc.discID})}">Update Disc</a>
+
+
+</main>
+</body>
+</html>

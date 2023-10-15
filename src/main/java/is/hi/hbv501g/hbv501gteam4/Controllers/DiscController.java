@@ -179,5 +179,13 @@ public class DiscController {
             catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        }
+        @RequestMapping("/disc/{id}")
+        public String discDetails(@PathVariable("id") long id, Model model) {
+            Disc disc = discService.findBydiscID(id);
+            model.addAttribute("disc", disc);
+            return "discDetails";
     }
 }
