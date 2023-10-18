@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import io.jsonwebtoken.Jwts;
+//import io.jsonwebtoken.Jwts;
 
 @Controller
 public class UserController {

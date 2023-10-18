@@ -2,36 +2,48 @@
 <html xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
     <title>Disc Detail</title>
 </head>
 <body>
 <main>
+    <h1>Frisbees</h1>
+    <hr>
+    <p th:text="${LoggedInUser.name}"></p>
     <h2>Disc Detail</h2>
     <table>
         <tr>
             <th>Name:</th>
-            <td th:text="${disc.name}">Disc Name</td>
+            <td th:text="${disc.name}"></td>
         </tr>
         <tr>
             <th>Description:</th>
-            <td th:text="${disc.description}">Disc Description</td>
+            <td th:text="${disc.description}"></td>
         </tr>
         <tr>
             <th>Type:</th>
-            <td th:text="${disc.type}">Disc Type</td>
+            <td th:text="${disc.type}"></td>
         </tr>
         <tr>
             <th>Condition:</th>
-            <td th:text="${disc.condition}">Disc Condition</td>
+            <td th:text="${disc.condition}"></td>
         </tr>
         <tr>
             <th>Price:</th>
-            <td th:text="${disc.price}">Disc Price</td>
+            <td th:text="${disc.price}"></td>
         </tr>
     </table>
 
-    <a th:href="@{/disc/{id}/update(id=${disc.discID})}">Update Disc</a>
+    <h2>Images</h2>
+    <div th:if="${images}">
+        <div th:each="image : ${images}">
+            <img th:src="${image.image}" alt="Disc Image"/>
+        </div>
+    </div>
+
+    <a th:href="@{/update/{id}(id=${disc.discID})}">Update</a>
+    <a th:href="@{/delete/{id}(id=${disc.discID})}">Delete</a>
 
 
 </main>
