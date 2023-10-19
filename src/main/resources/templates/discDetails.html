@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Disc Detail</title>
+    <style>
+        table {
+            width: 100%;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f3f5;
+        }
+
+        th {
+            font-size: 16px;
+            text-align: left;
+            font-weight: bold;
+            padding: 10px;
+        }
+        td {
+            font-size: 16px;
+            text-align: left;
+            padding: 16px;
+        }
+
+        img {
+            height: 300px;
+            width: 300px;
+            object-fit: fill;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Frisbees</h1>
+    <hr>
+    <h2>Disc Detail</h2>
+    <div class="details">
+        <table>
+            <tr>
+                <th>Name:</th>
+                <td th:text="${disc.name}"></td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td th:text="${disc.description}"></td>
+            </tr>
+            <tr>
+                <th>Type:</th>
+                <td th:text="${disc.type}"></td>
+            </tr>
+            <tr>
+                <th>Condition:</th>
+                <td th:text="${disc.condition}"></td>
+            </tr>
+            <tr>
+                <th>Price:</th>
+                <td th:text="${disc.price}"></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <h2>Images</h2>
+    <div th:if="${images}">
+        <div th:each="image : ${images}">
+            <img th:src="${image.image}" alt="Disc Image"/>
+        </div>
+    </div>
+
+    <a th:href="@{/update/{id}(id=${disc.discID})}">Update</a>
+    <a th:href="@{/delete/{id}(id=${disc.discID})}">Delete</a>
+
+
+</main>
+</body>
+</html>

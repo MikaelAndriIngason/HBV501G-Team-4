@@ -14,10 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -179,5 +176,16 @@ public class DiscController {
             catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        }
+
+        @RequestMapping (value = "/disc/{id}", method = RequestMethod.GET)
+        public String discDetails(@PathVariable("id") long id, Model model) {
+            Disc disc = discService.findBydiscID(id);
+            List<Image> images = disc.getImages();
+            model.addAttribute("disc", disc);
+            model.addAttribute("images", images);
+            return "discDetails";
     }
 }

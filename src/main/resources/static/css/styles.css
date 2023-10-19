@@ -147,3 +147,13 @@ a {
 .card-links a:hover {
     text-decoration: underline;
 }
+
+.details table {
+    width: 100%;
+    padding: 16px;
+}
+
+.details th, td {
+    font-size: 16px;
+    text-align: left;
+}

@@ -27,6 +27,7 @@
                     <p>Condition: <span th:text="${disc.condition}"></span></p>
                     <p>Price: <span th:text="${disc.price}"></span></p>
                     <div class="card-links">
+                        <a th:href="@{/disc/{id}(id=${disc.discID})}">Details</a>
                         <a th:href="@{/update/{id}(id=${disc.discID})}">Update</a>
                         <a th:href="@{/delete/{id}(id=${disc.discID})}">Delete</a>
                     </div>
