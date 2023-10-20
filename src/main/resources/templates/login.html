@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/styles.css">
-        <title>Sign in</title>
+        <title>Log in</title>
     </head>
     <body>
         <main>
-            <h2>Sign in</h2>
+            <h2>Log in</h2>
 
-            <form method="post" class="user-form" action="/signin">
+            <form method="post"action="/login" th:object="${user}">
                 <label for="email-input">
                     Email:
-                    <input type="email" id="email-input" name="email" required>
+                    <input type="email" id="email-input" name="email" required th:field="*{email}">
                 </label>
 
                 <label for="password-input">
                     Password:
-                    <input type="password" id="password-input" name="password" required>
+                    <input type="password" id="password-input" name="password" required th:field="*{password}">
                 </label>
 
-                <button type="submit" class="form-submit-btn">Sign in</button>
+                <button type="submit" class="form-submit-btn">Log in</button>
 
                 <p>Don't have an account? <a href="/signup">Sign up</a></p>
             </form>

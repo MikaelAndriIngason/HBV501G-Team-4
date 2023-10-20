@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>New Disc</title>
+</head>
+<body>
+<main>
+    <h2>New Disc</h2>
+
+    <form class="user-form" action="#" th:action="@{/addDisc}" th:object="${disc}" method="post" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" th:field="*{name}" id="name">
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+        <label for="description">Description:</label>
+        <input type="text" th:field="*{description}" id="description">
+        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+
+        <label for="type">Type:</label>
+        <input type="text" th:field="*{type}" id="type">
+        <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+
+        <label for="condition">Condition:</label>
+        <select id="condition" th:field="*{condition}">
+            <option value="">-- Select --</option>
+            <option value="new">New</option>
+            <option value="used">Used</option>
+        </select>
+        <span th:if="${#fields.hasErrors('condition')}" th:errors="*{condition}"></span>
+
+        <label for="price">Price:</label>
+        <input type="text" th:field="*{price}" id="price" >
+        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+
+        <label for="image">Picture:</label>
+        <input type="file" name="image" id="image" multiple>
+
+        <button type="submit" class="form-submit-btn">Add Disc</button>
+    </form>
+</main>
+
+</body>
+</html>

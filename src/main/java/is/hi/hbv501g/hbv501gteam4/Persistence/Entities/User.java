@@ -1,6 +1,9 @@
-package is.hi.hbv501g.hbv501gteam4.Entities;
+package is.hi.hbv501g.hbv501gteam4.Persistence.Entities;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -15,6 +18,9 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Disc> discs = new ArrayList<>();
 
     public User() {}
 
