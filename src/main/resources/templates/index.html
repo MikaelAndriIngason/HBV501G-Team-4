@@ -3,13 +3,50 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home Page</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://kit.fontawesome.com/561e814bd5.js" crossorigin="anonymous"></script>
+        <title>Frisbees | Index</title>
     </head>
     <body>
+        <header>
+            <h1><a href="/"><i class="fa-solid fa-circle-notch"></i> Frisbees</a></h1>
+
+            <div th:if="${LoggedInUser == null}">
+                <a href="/login" title="Sign in"><i class="fa-solid fa-right-to-bracket"></i> Sign in</a>
+            </div>
+            <div th:unless="${LoggedInUser == null}" style="display: flex; gap: 1em;">
+                <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
+                <a href="/logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
+            </div>
+        </header>
+
         <main>
-            <h1>Frisbees</h1>
-            <hr>
-            <a href="/signin">Sign in</a> | <a href="/signup">Sign up</a>
+            <div class="title-bar">
+                <h1>About us</h1>
+            </div>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras hendrerit tincidunt justo eu lacinia. Suspendisse consectetur est et consequat lobortis. Praesent mollis dignissim mi quis consequat. Duis tempus egestas arcu, quis convallis arcu tincidunt at. Integer non ligula leo. Vivamus tempor vulputate suscipit. Aenean congue, enim at pretium bibendum, diam est porta purus, vitae iaculis turpis enim suscipit justo.
+            </p>
+            <br>
+            <p>
+                Nullam faucibus nisl id metus porta consequat. Quisque eleifend rutrum ex vel condimentum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer lacinia dui odio, non euismod massa elementum vitae. Pellentesque molestie ipsum sapien. Sed sit amet placerat justo. Suspendisse viverra nulla id venenatis sodales.
+            </p>
+            <br>
+            <p>
+                Praesent efficitur, nunc in lacinia mattis, est enim mollis tortor, a sodales sapien ex vitae tortor. Quisque hendrerit luctus leo et feugiat. Fusce sit amet orci nibh. Curabitur et porttitor nisl, non aliquet arcu. Aliquam sed magna mollis, pretium ipsum id, mattis elit. Morbi dapibus purus vel imperdiet pretium. Mauris et fringilla enim. Vivamus pharetra arcu massa, at accumsan est dictum ut. Aliquam erat volutpat. Nullam vehicula, ex eu laoreet interdum, sem sapien dapibus nisl, eget semper justo dolor vel neque. Nunc metus diam, interdum at quam sagittis, hendrerit interdum arcu. Nunc in rutrum neque. Maecenas pulvinar bibendum ex, vitae pretium ligula congue sed. Nulla mollis lectus nunc, nec ullamcorper nisl semper sed. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+            </p>
+            <br>
+            <div class="image-carousel">
+                <img src="https://images.unsplash.com/photo-1619508111539-a0c4d7afa3d5?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <img src="https://images.unsplash.com/photo-1591337819702-5c21810edd47?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <img src="https://images.unsplash.com/photo-1649772317307-988009f89c2f?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+            </div>
         </main>
+
+        <footer>
+            Hildur Bjarkadóttir, Mikael Andri Ingason, Ragnheiður Þórðardóttir
+            <br>
+            2023 - Háskóli Íslands - HBV501G
+        </footer>
     </body>
 </html>
