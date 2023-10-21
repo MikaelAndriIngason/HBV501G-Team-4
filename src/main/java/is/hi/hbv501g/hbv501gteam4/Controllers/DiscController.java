@@ -181,20 +181,18 @@ public class DiscController {
             catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-
+    @RequestMapping (value = "/disc/{id}", method = RequestMethod.GET)
+    public String discDetails(@PathVariable("id") long id, Model model) {
+        Disc disc = discService.findBydiscID(id);
+        List<Image> images = disc.getImages();
+        model.addAttribute("disc", disc);
+        model.addAttribute("images", images);
+        if (user != null) {
+            model.addAttribute("user_id", user.getId());
+            model.addAttribute("LoggedInUser", user);
         }
-
-        @RequestMapping (value = "/disc/{id}", method = RequestMethod.GET)
-        public String discDetails(@PathVariable("id") long id, Model model) {
-            Disc disc = discService.findBydiscID(id);
-            List<Image> images = disc.getImages();
-            model.addAttribute("disc", disc);
-            model.addAttribute("images", images);
-            if (user != null) {
-                model.addAttribute("user_id", user.getId());
-                model.addAttribute("LoggedInUser", user);
-            }
-            return "discDetails";
+        return "discDetails";
     }
 }

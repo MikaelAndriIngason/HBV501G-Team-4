@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+    <html xmlns:th="https://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://kit.fontawesome.com/561e814bd5.js" crossorigin="anonymous"></script>
+        <title>Frisbees | Chat</title>
+    </head>
+    <body>
+        <header>
+            <h1><a href="/"><i class="fa-solid fa-circle-notch"></i> Frisbees</a></h1>
+
+            <div th:unless="${LoggedInUser == null}" style="display: flex; gap: 1em;">
+                <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
+                <a href="/chat" title="Home"><i class="fa-solid fa-message"></i> Chat</a>
+                <a href="/logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="title-bar">
+                <h1>Conversations</h1>
+            </div>
+
+            <div class="chat-menu">
+                <div class="chat-contacts" th:switch="${conversations}">
+                    <p th:case="null">No conversations yet...</p>
+                    <div th:case="*" class="contact-listing">
+                        <div th:each="conversation : ${conversations}" class="contact">
+                            <a th:href="@{/chat/{id}(id=${conversation.conversationID})}" class="contact-link">
+                                <h3 th:text="${conversation.conversationTitle}"></h3>
+                                <p>Conversation: <span th:text="${conversation.conversationEnded ? 'ended' : 'ongoing'}" th:class="${conversation.conversationEnded ? 'ended-chat' : 'active-chat'}"></span></p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-conversation">
+                    <div class="conversation-header">
+                        <h3 th:text="${currentConversation != null ? currentConversation.conversationTitle : '...'}"></h3>
+                        <div class="conversation-options" th:if="${activeConversation}">
+                            <!--<form th:action="@{'/endChat/' + ${currentConversation.conversationID}}" method="post" style="height: 24px">
+                                <button type="submit" title="End chat?" class="end-conversation-btn"><i class="fa-solid fa-comment-slash"></i></button>
+                            </form>-->
+                            <a th:href="@{'/endChat/' + ${currentConversation.conversationID}}" title="End chat?"><i class="fa-solid fa-comment-slash"></i></a>
+                            <a th:href="@{/chat/refresh/{conversationId}(conversationId=${currentConversation.conversationID})}" title="Refresh chat?"><i class="fa-solid fa-rotate"></i></a>
+
+                        </div>
+                    </div>
+                    <div class="chat-messages" th:switch="${messages}">
+                        <p th:case="null">Start the conversation by sending a message</p>
+                        <div th:case="*" class="message-container">
+                            <div th:each="message, iterStat : ${messages}" style="display: flex; flex-direction: column;">
+                                <div th:class="${names[iterStat.index]} == 'You' ? 'message' : 'message other'">
+                                    <span th:text="${names[iterStat.index]}" class="contact-name"></span>
+                                    <p th:text="${message.message}"></p>
+                                    <!--<span th:text="${message.sentAt}" class="message-time"></span>-->
+                                </div>
+                            </div>
+                            <p th:if="${!activeConversation}" style="text-align: center">Conversation ended</p>
+                        </div>
+                    </div>
+                    <form th:if="${currentConversation != null}" th:action="@{'/send-message/' + ${currentConversation.conversationID}}" method="post">
+                        <input type="text" name="message" th:disabled="${!activeConversation}" placeholder="Send a message">
+                        <input type="submit" th:disabled="${!activeConversation}" value="Send">
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            Hildur Bjarkadóttir, Mikael Andri Ingason, Ragnheiður Þórðardóttir
+            <br>
+            2023 - Háskóli Íslands - HBV501G
+        </footer>
+
+        <script>
+            document.getElementById('refreshChatLink').addEventListener('click', function(event) {
+                event.preventDefault();
+                location.reload();
+            });
+        </script>
+    </body>
+</html>

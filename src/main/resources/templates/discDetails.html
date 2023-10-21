@@ -15,6 +15,7 @@
 
             <div th:unless="${LoggedInUser == null}" style="display: flex; gap: 1em;">
                 <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
+                <a href="/chat" title="Home"><i class="fa-solid fa-message"></i> Chat</a>
                 <a href="/logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
             </div>
         </header>
@@ -47,6 +48,9 @@
                     <p th:text="${disc.description}"></p>
                     <br>
                     <p th:text="${disc.price} + ' kr.'" class="disc-price"></p>
+                    <div th:if="${disc.getUserId() != user_id}">
+                        <a th:href="@{'/create-conversation/' + ${disc.getUserId()} + '/' + ${disc.name}}" class="title-bar-btn" title="Message the seller?"><i class="fa-solid fa-message"></i> Message the seller</a>
+                    </div>
                 </div>
             </div>
             <div th:if="${images}">

@@ -41,6 +41,11 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public User findById(long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
     public User login(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
