@@ -1,42 +1,69 @@
 <!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
-    <title>Home Page</title>
-</head>
-<body>
-<main>
-    <h1>Frisbees</h1>
-    <hr>
-    <p th:text="${LoggedInUser.name}"></p>
+    <html xmlns:th="https://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://kit.fontawesome.com/561e814bd5.js" crossorigin="anonymous"></script>
+        <title>Frisbees | Home</title>
+    </head>
+    <body>
+        <header>
+            <h1><a href="/"><i class="fa-solid fa-circle-notch"></i> Frisbees</a></h1>
 
-    <div class="user-form" th:switch="${discs}">
-        <h2 th:case="null">No Discs yet!</h2>
-        <div th:case="*">
-            <h2>Discs</h2>
-            <div class="card-container">
-                <div th:each="disc : ${discs}" class="card">
-                    <h3 th:text="${disc.name}"></h3>
-                    <div  th:if="${disc.images != null }">
-                        <img th:each="image, iterStat : ${disc.images}" th:if="${iterStat.index == 0}" th:src="${image.image}" alt="Image" style="max-width:250px;"/>
-                    </div>
-                    <p th:text="${disc.description}"></p>
-                    <p>Type: <span th:text="${disc.type}"></span></p>
-                    <p>Condition: <span th:text="${disc.condition}"></span></p>
-                    <p>Price: <span th:text="${disc.price}"></span></p>
-                    <div class="card-links">
-                        <a th:href="@{/disc/{id}(id=${disc.discID})}">Details</a>
-                        <a th:href="@{/update/{id}(id=${disc.discID})}">Update</a>
-                        <a th:href="@{/delete/{id}(id=${disc.discID})}">Delete</a>
+            <!--<p th:text="${LoggedInUser.name}"></p>-->
+
+            <div th:unless="${LoggedInUser == null}" style="display: flex; gap: 1em;">
+                <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
+                <a href="/chat" title="Home"><i class="fa-solid fa-message"></i> Chat</a>
+                <a href="/logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="title-bar">
+                <h1>All frisbees</h1>
+                <a href="/addDisc" class="title-bar-btn"><i class="fa-solid fa-plus"></i> Add a new disc</a>
+            </div>
+            <div class="disc-listing" th:switch="${discs}">
+                <h2 th:case="null">No discs yet...</h2>
+                <div th:case="*">
+                    <div class="card-container">
+                        <div th:each="disc : ${discs}" class="card">
+                            <h3 th:text="${disc.name}"></h3>
+
+                            <div th:if="${disc.images != null }">
+                                <img th:each="image, iterStat : ${disc.images}" th:if="${iterStat.index == 0}" th:src="${image.image}" alt="Image" style="width: 100%;"/>
+                            </div>
+                            <div th:if="${#lists.isEmpty(disc.images)}">
+                                <img src="/images/noimage.jpg" alt="No image" style="width: 100%;"/>
+                            </div>
+
+                            <p th:text="${disc.description}" class="card-description"></p>
+
+                            <p class="card-price">
+                                <span th:text="${disc.price} + ' kr.'" class="disc-price" ></span>
+                                <br>
+                                <span th:text="'for ' + ${disc.condition}" class="disc-condition" ></span>
+                            </p>
+
+                            <div class="card-links">
+                                <a th:href="@{/disc/{id}(id=${disc.discID})}" title="details" class="card-btn">More info <i class="fa-solid fa-chevron-right"></i></a>
+                                <!--<div th:if="${disc.getUserId() == user_id}">
+                                    <a th:href="@{/update/{id}(id=${disc.discID})}" title="edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                                    <a th:href="@{/delete/{id}(id=${disc.discID})}" title="delete"><i class="fa-regular fa-trash-can"></i></a>
+                                </div>-->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <p><a href="/addDisc">Add a new disc</a></p>
-        </div>
-    </div>
+        </main>
 
-</main>
-</body>
+        <footer>
+            Hildur Bjarkadóttir, Mikael Andri Ingason, Ragnheiður Þórðardóttir
+            <br>
+            2023 - Háskóli Íslands - HBV501G
+        </footer>
+    </body>
 </html>

@@ -35,6 +35,8 @@ public class DiscController {
     DiscService discService;
     ImageService imageService;
 
+    private User user;
+
     public DiscController(DiscService discService, ImageService imageService) {
         this.discService = discService;
         this.imageService = imageService;
@@ -45,6 +47,7 @@ public class DiscController {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
         if (sessionUser != null) {
             model.addAttribute("LoggedInUser", sessionUser);
+            user = sessionUser;
         } else {
             return "redirect:/";
         }
@@ -66,6 +69,8 @@ public class DiscController {
         if (result.hasErrors()) {
             return "addDisc";
         }
+
+        disc.setUser(user);
 
         Disc discSaved = discService.save(disc);
         addImage(discSaved, images);
@@ -176,16 +181,18 @@ public class DiscController {
             catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-
+    @RequestMapping (value = "/disc/{id}", method = RequestMethod.GET)
+    public String discDetails(@PathVariable("id") long id, Model model) {
+        Disc disc = discService.findBydiscID(id);
+        List<Image> images = disc.getImages();
+        model.addAttribute("disc", disc);
+        model.addAttribute("images", images);
+        if (user != null) {
+            model.addAttribute("user_id", user.getId());
+            model.addAttribute("LoggedInUser", user);
         }
-
-        @RequestMapping (value = "/disc/{id}", method = RequestMethod.GET)
-        public String discDetails(@PathVariable("id") long id, Model model) {
-            Disc disc = discService.findBydiscID(id);
-            List<Image> images = disc.getImages();
-            model.addAttribute("disc", disc);
-            model.addAttribute("images", images);
-            return "discDetails";
+        return "discDetails";
     }
 }

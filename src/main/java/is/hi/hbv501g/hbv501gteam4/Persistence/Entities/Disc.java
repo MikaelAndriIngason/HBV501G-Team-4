@@ -81,4 +81,15 @@ public class Disc {
     public void setImages(List<Image> images) {
         this.images = images;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Long getUserId() {
+        if (user != null)
+            return user.getId();
+        else
+            return (long) -1;
+    }
 }

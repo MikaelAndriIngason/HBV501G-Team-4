@@ -18,8 +18,19 @@ public class IndexController {
         this.userService = userService;
     }
 
-    @RequestMapping("/")
+    /*@RequestMapping("/")
     public String indexPage(Model model) {
+        return "index";
+    }*/
+
+    @GetMapping("/")
+    public String indexPage(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("LoggedInUser");
+
+        if (loggedInUser != null) {
+            model.addAttribute("LoggedInUser", loggedInUser);
+        }
+
         return "index";
     }
 

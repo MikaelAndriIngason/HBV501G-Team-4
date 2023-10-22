@@ -1,79 +1,69 @@
 <!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
-    <title>Disc Detail</title>
-    <style>
-        table {
-            width: 100%;
-        }
+    <html xmlns:th="https://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://kit.fontawesome.com/561e814bd5.js" crossorigin="anonymous"></script>
+        <title th:text="'Frisbees | ' + ${disc.name}"></title>
+    </head>
+    <body>
+        <header>
+            <h1><a href="/"><i class="fa-solid fa-circle-notch"></i> Frisbees</a></h1>
 
-        table tr:nth-child(even) {
-            background-color: #f2f3f5;
-        }
+            <!--<p th:text="${LoggedInUser.name}"></p>-->
 
-        th {
-            font-size: 16px;
-            text-align: left;
-            font-weight: bold;
-            padding: 10px;
-        }
-        td {
-            font-size: 16px;
-            text-align: left;
-            padding: 16px;
-        }
+            <div th:unless="${LoggedInUser == null}" style="display: flex; gap: 1em;">
+                <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
+                <a href="/chat" title="Home"><i class="fa-solid fa-message"></i> Chat</a>
+                <a href="/logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
+            </div>
+        </header>
+        <main>
+            <div class="title-bar">
+                <h1 th:text="${disc.name}"></h1>
 
-        img {
-            height: 300px;
-            width: 300px;
-            object-fit: fill;
-        }
-    </style>
-</head>
-<body>
-<main>
-    <h1>Frisbees</h1>
-    <hr>
-    <h2>Disc Detail</h2>
-    <div class="details">
-        <table>
-            <tr>
-                <th>Name:</th>
-                <td th:text="${disc.name}"></td>
-            </tr>
-            <tr>
-                <th>Description:</th>
-                <td th:text="${disc.description}"></td>
-            </tr>
-            <tr>
-                <th>Type:</th>
-                <td th:text="${disc.type}"></td>
-            </tr>
-            <tr>
-                <th>Condition:</th>
-                <td th:text="${disc.condition}"></td>
-            </tr>
-            <tr>
-                <th>Price:</th>
-                <td th:text="${disc.price}"></td>
-            </tr>
-        </table>
-    </div>
-    <hr>
-    <h2>Images</h2>
-    <div th:if="${images}">
-        <div th:each="image : ${images}">
-            <img th:src="${image.image}" alt="Disc Image"/>
-        </div>
-    </div>
+                <div th:if="${disc.getUserId() == user_id}">
+                    <a th:href="@{/update/{id}(id=${disc.discID})}" class="title-bar-btn" title="Update disc?"><i class="fa-solid fa-pen-to-square"></i> Update</a>
+                    <a th:href="@{/delete/{id}(id=${disc.discID})}" class="title-bar-btn red-btn" title="Delete disc?"><i class="fa-solid fa-trash-can"></i> Delete</a>
+                </div>
+            </div>
 
-    <a th:href="@{/update/{id}(id=${disc.discID})}">Update</a>
-    <a th:href="@{/delete/{id}(id=${disc.discID})}">Delete</a>
+            <div class="disc-details">
+                <div>
+                    <div th:if="${disc.images != null }">
+                        <img th:each="image, iterStat : ${disc.images}" th:if="${iterStat.index == 0}" th:src="${image.image}" alt="Image" style="width: 100%;"/>
+                    </div>
+                    <div th:if="${#lists.isEmpty(disc.images)}">
+                        <img src="/images/noimage.jpg" alt="No image" style="width: 100%;"/>
+                    </div>
+                </div>
 
-
-</main>
-</body>
+                <div>
+                    <p><b>Disc type:</b></p>
+                    <p th:text="${disc.type}"></p>
+                    <p><b>Disc condition:</b></p>
+                    <p th:text="${disc.condition}" style="text-transform: capitalize;"></p>
+                    <p><b>Description:</b></p>
+                    <p th:text="${disc.description}"></p>
+                    <br>
+                    <p th:text="${disc.price} + ' kr.'" class="disc-price"></p>
+                    <div th:if="${disc.getUserId() != user_id}">
+                        <a th:href="@{'/create-conversation/' + ${disc.getUserId()} + '/' + ${disc.name}}" class="title-bar-btn" title="Message the seller?"><i class="fa-solid fa-message"></i> Message the seller</a>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${images}">
+                <h2>All images</h2>
+                <div class="image-carousel four-images" th:each="image : ${images}">
+                    <img th:src="${image.image}" alt="Disc Image"/></div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            Hildur Bjarkadóttir, Mikael Andri Ingason, Ragnheiður Þórðardóttir
+            <br>
+            2023 - Háskóli Íslands - HBV501G
+        </footer>
+    </body>
 </html>

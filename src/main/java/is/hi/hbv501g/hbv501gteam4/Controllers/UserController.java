@@ -88,5 +88,14 @@ public class UserController {
         return "redirect:/";
     }
 
-
+    /**
+     * Skráir notandan út
+     * @param session User session
+     * @return Sendir notandan aftur á index
+     */
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 }
