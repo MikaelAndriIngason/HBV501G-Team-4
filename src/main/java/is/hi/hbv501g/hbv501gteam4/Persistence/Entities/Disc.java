@@ -17,7 +17,11 @@ public class Disc {
     private String description;
     private String type;
     private String condition;
+
+    private String colour;
+
     private double price;
+
 
     @OneToMany(mappedBy = "disc", cascade = CascadeType.ALL)
     List<Image> images = new ArrayList<>();
@@ -92,4 +96,10 @@ public class Disc {
         else
             return (long) -1;
     }
+
+    public String getColour(){
+        return colour;
+    }
+
+    public void setColour(String colour) { this.colour = colour;}
 }

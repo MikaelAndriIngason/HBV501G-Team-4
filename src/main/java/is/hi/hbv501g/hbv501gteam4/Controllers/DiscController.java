@@ -6,7 +6,6 @@ import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.User;
 import is.hi.hbv501g.hbv501gteam4.Services.DiscService;
 import is.hi.hbv501g.hbv501gteam4.Services.ImageService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,12 +18,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 
 import org.springframework.http.*;
@@ -36,6 +29,7 @@ public class DiscController {
     ImageService imageService;
 
     private User user;
+
 
     public DiscController(DiscService discService, ImageService imageService) {
         this.discService = discService;
@@ -59,9 +53,7 @@ public class DiscController {
     }
 
     @RequestMapping(value = "/addDisc", method = RequestMethod.GET)
-    public String addDiscGET(Disc disc, Model model) {
-        return "addDisc";
-    }
+    public String addDiscGET(Disc disc, Model model) {return "addDisc";}
 
 
     @RequestMapping(value = "/addDisc", method = RequestMethod.POST)
@@ -183,9 +175,19 @@ public class DiscController {
         }
     }
 
+    /**
+     * Retrieves and displays the details of the disc with specified ID
+     *
+     * @param id the identifier of the Frisbee to retrieve and display details for.
+     * @param model object, used to pass data to the view
+     * @return the site or template for discDetails
+     */
     @RequestMapping (value = "/disc/{id}", method = RequestMethod.GET)
     public String discDetails(@PathVariable("id") long id, Model model) {
+        //Retrieves the disc with the specified ID form the discService
         Disc disc = discService.findBydiscID(id);
+
+        //Retrieve a list of the images related to that specific disc
         List<Image> images = disc.getImages();
         model.addAttribute("disc", disc);
         model.addAttribute("images", images);
@@ -194,5 +196,22 @@ public class DiscController {
             model.addAttribute("LoggedInUser", user);
         }
         return "discDetails";
+    }
+
+    @GetMapping("/filter")
+    public String filterDiscs(@RequestParam(value = "minPrice", required = false) int minPrice,
+                              @RequestParam(value = "maxPrice", required = false) int maxPrice,
+                              @RequestParam(value = "colour", required = false) String colour,
+                              @RequestParam(value = "condition", required = false) String condition,
+                              Model model) {
+        List<Disc> filteredDiscs = discService.findByPrice(minPrice, maxPrice);
+        if (colour != null) {
+            filteredDiscs = discService.findByColour(colour);
+        }
+        if (condition != null) {
+            filteredDiscs = discService.findByCondition(condition);
+        }
+        model.addAttribute("discs", filteredDiscs);
+        return "home";
     }
 }
