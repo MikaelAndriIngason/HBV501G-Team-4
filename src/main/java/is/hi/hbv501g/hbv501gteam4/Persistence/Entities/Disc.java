@@ -29,6 +29,10 @@ public class Disc {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @OneToMany(mappedBy = "disc", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorite> favorites = new ArrayList<>();
+
+
 
     public long getDiscID() {
         return discID;
@@ -102,4 +106,6 @@ public class Disc {
     }
 
     public void setColour(String colour) { this.colour = colour;}
+
+
 }

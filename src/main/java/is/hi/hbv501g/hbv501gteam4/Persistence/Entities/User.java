@@ -22,6 +22,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Disc> discs = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorite> favorites = new ArrayList<>();
+
+
     public User() {}
 
     public User(String name, String email, String password) {
@@ -55,4 +59,14 @@ public class User {
     }
 
     public Long getId() { return id; }
+
+    public List<Disc> getDiscs() {
+        return discs;
+    }
+
+    public void setDiscs(List<Disc> discs) {
+        this.discs = discs;
+    }
+
+
 }

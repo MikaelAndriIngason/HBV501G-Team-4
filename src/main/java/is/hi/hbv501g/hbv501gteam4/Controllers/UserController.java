@@ -1,5 +1,7 @@
 package is.hi.hbv501g.hbv501gteam4.Controllers;
 
+import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Conversation;
+import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Disc;
 import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.User;
 import is.hi.hbv501g.hbv501gteam4.Services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 //import io.jsonwebtoken.Jwts;
 
 @Controller
@@ -98,4 +102,5 @@ public class UserController {
         session.invalidate();
         return "redirect:/";
     }
+
 }

@@ -1,10 +1,14 @@
 package is.hi.hbv501g.hbv501gteam4.Controllers;
 
+import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Conversation;
 import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Disc;
+import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Favorite;
 import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Image;
 import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.User;
 import is.hi.hbv501g.hbv501gteam4.Services.DiscService;
+import is.hi.hbv501g.hbv501gteam4.Services.FavoriteService;
 import is.hi.hbv501g.hbv501gteam4.Services.ImageService;
+import is.hi.hbv501g.hbv501gteam4.Services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +22,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.*;
@@ -27,15 +32,25 @@ public class DiscController {
 
     DiscService discService;
     ImageService imageService;
+    UserService userService;
+    FavoriteService favoriteService;
 
     private User user;
 
 
-    public DiscController(DiscService discService, ImageService imageService) {
+    public DiscController(DiscService discService, ImageService imageService, UserService userService, FavoriteService favoriteService) {
         this.discService = discService;
         this.imageService = imageService;
+        this.userService = userService;
+        this.favoriteService = favoriteService;
     }
 
+    /**
+     * opens the home page if a user is logged in
+     * @param session session id
+     * @param model
+     * @return redirects to home if logged in else to the index page
+     */
     @RequestMapping("/home")
     public String indexPageLoggedIn(HttpSession session, Model model) {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
@@ -49,13 +64,50 @@ public class DiscController {
 
         //Add some data to the Model
         model.addAttribute("discs", allDiscs);
+        model.addAttribute("showingFavorites", false);
         return "home";
     }
 
+    /**
+     * displays his favorites on the home page
+     * @param session session id
+     * @param model
+     * @return redirects to home if logged in else to the index page
+     */
+    @RequestMapping("/home/favorites")
+    public String homePageFavorites(HttpSession session, Model model) {
+        List<Favorite> favorites = favoriteService.findFavoritesByUser(user);
+        List<Disc> favoriteDiscs = new ArrayList<>();
+
+        for (Favorite favorite : favorites) {
+            Disc disc = favorite.getDisc();
+            favoriteDiscs.add(disc);
+        }
+
+        //Add some data to the Model
+        model.addAttribute("discs", favoriteDiscs);
+        model.addAttribute("showingFavorites", true);
+        return "home";
+    }
+
+    /**
+     * opens the page so a user can add a new disc
+     * @param disc a potential disc
+     * @param model
+     * @return the page to add a disc
+     */
     @RequestMapping(value = "/addDisc", method = RequestMethod.GET)
     public String addDiscGET(Disc disc, Model model) {return "addDisc";}
 
 
+    /**
+     * adds a disc to the db
+     * @param disc the disc being added
+     * @param result
+     * @param model
+     * @param images images that were uploaded with the new disc
+     * @return home is adding a disc was successful
+     */
     @RequestMapping(value = "/addDisc", method = RequestMethod.POST)
     public String addDiscPOST(Disc disc, BindingResult result, Model model, @RequestParam("image") MultipartFile[] images){
         if (result.hasErrors()) {
@@ -69,6 +121,12 @@ public class DiscController {
         return "redirect:/home";
     }
 
+    /**
+     * page to edit the disc
+     * @param id id of the disc that the user wants to edit
+     * @param model
+     * @return the page to edit a disc
+     */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String updateDiscGET(@PathVariable("id") long id, Model model) {
         Disc discToUpdate = discService.findBydiscID(id);
@@ -76,21 +134,32 @@ public class DiscController {
         return "updateDisc";
     }
 
+    /**
+     * function to update the disc in the db
+     * @param disc the disc with updated information
+     * @param result
+     * @param model
+     * @param images images that were added to the disc
+     * @return redirection to the home page.
+     */
     @RequestMapping(value = "/updateDisc", method = RequestMethod.POST)
     public String updateDiscPOST(Disc disc, BindingResult result, Model model, @RequestParam("image") MultipartFile[] images) {
         if (result.hasErrors()) {
             System.out.println(result.getAllErrors());
             return "redirect:/home";
         }
-        //List<Image> imagesPrev = disc.getImages();  // Get the list of existing images
 
-        //List<Image> imageList = addImageUpdate(disc, images, imagesPrev);
-        //disc.setImages(imageList);
         Disc discSaved = discService.save(disc);
         addImage(discSaved, images);
         return "redirect:/home";
     }
 
+    /**
+     * to delete a disc
+     * @param id id of the disc that should be deleted
+     * @param model
+     * @return redirection to the home page
+     */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteDisc(@PathVariable("id") long id, Model model) {
         Disc discToDelete = discService.findBydiscID(id);
@@ -98,6 +167,13 @@ public class DiscController {
         return "redirect:/home";
     }
 
+    /**
+     * function to delete an image that is connected to a disc
+     * @param id id of the disc that the image is connected to
+     * @param imageID id of the image
+     * @param model
+     * @return the page to update a disc (same page it is called from)
+     */
     @RequestMapping(value = "/deleteImage/{id}/{imageId}", method = RequestMethod.GET)
     public String deleteImage(@PathVariable("id") long id,@PathVariable("imageId") long imageID,Model model) {
         Image imageToDelete = imageService.findByimageID(imageID);
@@ -106,6 +182,11 @@ public class DiscController {
         return String.format("redirect:/update/%s", id);
     }
 
+    /**
+     * Function to add an image to the bucket in supabase
+     * @param disc the disc that the image is connected to
+     * @param images the image that needs to be uploaded
+     */
     private void addImage(Disc disc, MultipartFile[] images){
         for (MultipartFile image : images) {
             // Process each image here
@@ -146,6 +227,10 @@ public class DiscController {
         }
     }
 
+    /**
+     * Function to delete an image
+     * @param image image that should be deleted
+     */
     private void deleteImage(Image image){
         try {
 
@@ -183,9 +268,17 @@ public class DiscController {
      * @return the site or template for discDetails
      */
     @RequestMapping (value = "/disc/{id}", method = RequestMethod.GET)
-    public String discDetails(@PathVariable("id") long id, Model model) {
+    public String discDetails(HttpSession session, @PathVariable("id") long id, Model model) {
         //Retrieves the disc with the specified ID form the discService
         Disc disc = discService.findBydiscID(id);
+
+        Favorite favorite = favoriteService.findFavoriteByUserAndDisc(user, disc);
+        List<Favorite> favorites = favoriteService.findFavoritesByUser(user);
+        model.addAttribute("favorite", favorites.contains(favorite));
+        if(favorite != null){
+            model.addAttribute("favoriteId", favorite.getId());
+        }
+
 
         //Retrieve a list of the images related to that specific disc
         List<Image> images = disc.getImages();
@@ -198,20 +291,44 @@ public class DiscController {
         return "discDetails";
     }
 
-    @GetMapping("/filter")
-    public String filterDiscs(@RequestParam(value = "minPrice", required = false) int minPrice,
-                              @RequestParam(value = "maxPrice", required = false) int maxPrice,
-                              @RequestParam(value = "colour", required = false) String colour,
-                              @RequestParam(value = "condition", required = false) String condition,
-                              Model model) {
-        List<Disc> filteredDiscs = discService.findByPrice(minPrice, maxPrice);
-        if (colour != null) {
-            filteredDiscs = discService.findByColour(colour);
+
+    /**
+     * Adds a disc to favorites
+     * @param session
+     * @param discId the id of the disc that should be added to favorites
+     * @return the detail page (same page that the function is called from)
+     */
+    @RequestMapping(value= "/favorites/{discId}", method = RequestMethod.GET)
+    public String addToFavorites(HttpSession session, @PathVariable("discId") long discId) {
+        User sessionUser = (User) session.getAttribute("LoggedInUser");
+        if (sessionUser != null) {
+            Disc newFavoriteDisc = discService.findBydiscID(discId);
+
+            Favorite favorite = new Favorite(sessionUser, newFavoriteDisc);
+            favoriteService.save(favorite);
+
+            return "redirect:/disc/" + discId;
+        } else {
+            return "redirect:/";
         }
-        if (condition != null) {
-            filteredDiscs = discService.findByCondition(condition);
+    }
+
+    /**
+     * Removes a disc from favorites
+     * @param session
+     * @param discId id of the disc that should be removed
+     * @return
+     */
+    @RequestMapping(value= "/favorites/remove/{discId}/{favoriteId}", method = RequestMethod.GET)
+    public String removeFromFavorites(HttpSession session, @PathVariable("discId") long discId, @PathVariable("favoriteId") long favoriteId) {
+        User sessionUser = (User) session.getAttribute("LoggedInUser");
+        if (sessionUser != null) {
+            Favorite favorite = favoriteService.findById(favoriteId);
+            favoriteService.delete(favorite);
+            return "redirect:/disc/" + discId;
+
+        } else {
+            return "redirect:/";
         }
-        model.addAttribute("discs", filteredDiscs);
-        return "home";
     }
 }

@@ -49,8 +49,12 @@
                     <p th:text="${disc.description}"></p>
                     <br>
                     <p th:text="${disc.price} + ' kr.'" class="disc-price"></p>
-                    <div th:if="${disc.getUserId() != user_id}">
+                    <div class="button-above" th:if="${disc.getUserId() != user_id}">
                         <a th:href="@{'/create-conversation/' + ${disc.getUserId()} + '/' + ${disc.name}}" class="title-bar-btn" title="Message the seller?"><i class="fa-solid fa-message"></i> Message the seller</a>
+                    </div>
+                    <div class="button-above" >
+                        <a th:if="${favorite} == false" th:href="@{'/favorites/' + ${disc.discID}}" class="title-bar-btn" title="Add to Favorites"><i class="fa-solid fa-heart"></i> Add to Favorites</a>
+                        <a th:if="${favorite} == true" th:href="@{'/favorites/remove/' + ${disc.discID} + '/' + ${favoriteId}}" class="title-bar-btn" title="Remove from Favorites"><i class="fa-regular fa-heart"></i> Remove from Favorites</a>
                     </div>
                 </div>
             </div>

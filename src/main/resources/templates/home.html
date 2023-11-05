@@ -15,7 +15,7 @@
 
             <div th:unless="${LoggedInUser == null}" style="display: flex; gap: 1em;">
                 <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
-                <a href="/chat" title="Home"><i class="fa-solid fa-message"></i> Chat</a>
+                <a href="/chat" title="Chat"><i class="fa-solid fa-message"></i> Chat</a>
                 <a href="/logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
             </div>
         </header>
@@ -23,37 +23,10 @@
         <main>
             <div class="title-bar">
                 <h1>All frisbees</h1>
+                <a th:if="${showingFavorites} == false" href="/home/favorites" class="title-bar-btn"><i class="fa-solid fa-heart"></i> Favorites</a>
+                <a th:if="${showingFavorites} == true" href="/home" class="title-bar-btn"><i class="fa-regular fa-heart"></i> All discs</a>
                 <a href="/addDisc" class="title-bar-btn"><i class="fa-solid fa-plus"></i> Add a new disc</a>
             </div>
-
-            <form action="/filter" method="get">
-                <label for="minPrice">Min Price:</label>
-                <input type="number" name="minPrice" id="minPrice">
-                <label for="maxPrice">Max Price:</label>
-                <input type="number" name="maxPrice" id="maxPrice">
-                <label for="colour">Color:</label>
-                <select name="colour" id="colour">
-                    <option value="">-- Select --</option>
-                    <option value="yellow">Yellow</option>
-                    <option value="red">Red</option>
-                    <option value="green">Green</option>
-                    <option value="blue">Blue</option>
-                    <option value="black">Black</option>
-                    <option value="white">White</option>
-                    <option value="purple">Purple</option>
-                    <option value="other">Other</option>
-                </select>
-
-                <label for="condition">Condition:</label>
-                <select name="condition" id="condition">
-                    <option value="">-- Select --</option>
-                    <option value="new">New</option>
-                    <option value="used">Used</option>
-                </select>
-
-                <button type="submit">Filter</button>
-            </form>
-
 
             <div class="disc-listing" th:switch="${discs}">
                 <h2 th:case="null">No discs yet...</h2>
