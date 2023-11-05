@@ -11,6 +11,9 @@ public interface DiscService {
 
     List<Disc> findByName(String name);
     List<Disc> findAll();
+    List<Disc> findByPrice(int minPrice, int maxPrice);
+    List<Disc> findByColour(String colour);
+    List<Disc> findByCondition(String condition);
     Disc findBydiscID(long id);
     Disc save(Disc disc);
     void delete(Disc disc);

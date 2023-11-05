@@ -34,6 +34,7 @@ public class DiscServiceImplementation implements DiscService {
         return discRepository.findBydiscID(id);
     }
 
+
     @Override
     public Disc save(Disc disc) {
         return discRepository.save(disc);
@@ -42,5 +43,20 @@ public class DiscServiceImplementation implements DiscService {
     @Override
     public void delete(Disc disc) {
         discRepository.delete(disc);
+    }
+
+    @Override
+    public List<Disc> findByColour(String colour) {
+        return discRepository.findByColour(colour);
+    }
+
+    @Override
+    public List<Disc> findByPrice(int minPrice, int maxPrice) {
+        return discRepository.findByPriceBetween(minPrice, maxPrice);
+    }
+
+    @Override
+    public List<Disc> findByCondition(String condition) {
+        return discRepository.findByCondition(condition);
     }
 }

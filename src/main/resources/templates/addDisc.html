@@ -30,6 +30,20 @@
         </select>
         <span th:if="${#fields.hasErrors('condition')}" th:errors="*{condition}"></span>
 
+        <label for="colour">Colour:</label>
+        <select id="colour" th:field="*{colour}">
+            <option value="">-- Select --</option>
+            <option value="yellow">Yellow</option>
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            <option value="purple">Purple</option>
+            <option value="other">Other</option>
+        </select>
+        <span th:if="${#fields.hasErrors('colour')}" th:errors="*{colour}"></span>
+
         <label for="price">Price:</label>
         <input type="text" th:field="*{price}" id="price" >
         <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>

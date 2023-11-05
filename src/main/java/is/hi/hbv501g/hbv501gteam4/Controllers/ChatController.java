@@ -136,4 +136,24 @@ public class ChatController {
             return "redirect:/";
         }
     }
+
+    /**
+     * Starts a conversation with customer service
+     * @param session session of the user
+     * @return redirects to chats and opens the conversation with Customer Service
+     */
+    @GetMapping("/create-conversation/customer-service")
+    public String createConversationCustomerService(HttpSession session) {
+        User sessionUser = (User) session.getAttribute("LoggedInUser");
+        if (sessionUser != null) {
+            Conversation conversation = new Conversation(sessionUser.getId(), 10, "Customer Service");
+
+            conversationService.save(conversation);
+
+            return "redirect:/chat/" + conversation.getConversationID();
+
+        } else {
+            return "redirect:/";
+        }
+    }
 }

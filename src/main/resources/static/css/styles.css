@@ -457,3 +457,13 @@ a {
 .active-chat {
     color: green;
 }
+
+.customer-service{
+    margin-top: 20px !important;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-above{
+    margin-top: 20px !important;
+}

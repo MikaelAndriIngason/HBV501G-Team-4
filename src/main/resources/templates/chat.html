@@ -19,6 +19,7 @@
         </header>
 
         <main>
+            <p></p>
             <div class="title-bar">
                 <h1>Conversations</h1>
             </div>
@@ -65,6 +66,10 @@
                         <input type="submit" th:disabled="${!activeConversation}" value="Send">
                     </form>
                 </div>
+            </div>
+
+            <div th:unless="${LoggedInUser.id == 10}"  class="customer-service">
+                <a href="/create-conversation/customer-service" class="title-bar-btn" title="Customer Service"><i class="fa-solid fa-message"></i> Customer Service</a>
             </div>
         </main>
 
