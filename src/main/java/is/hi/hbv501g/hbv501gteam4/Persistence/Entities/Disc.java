@@ -20,7 +20,7 @@ public class Disc {
 
     private String colour;
 
-    private double price;
+    private int price;
 
 
     @OneToMany(mappedBy = "disc", cascade = CascadeType.ALL)
@@ -58,7 +58,7 @@ public class Disc {
         this.condition = condition;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

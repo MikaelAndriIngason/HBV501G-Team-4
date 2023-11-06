@@ -28,8 +28,64 @@
                 <a href="/addDisc" class="title-bar-btn"><i class="fa-solid fa-plus"></i> Add a new disc</a>
             </div>
 
+            <div class="filter" id="filter">
+                <details>
+                <summary>Filter and Search</summary>
+                <form action="/filter" method="get">
+                    <label for="name">Disc Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter disc name...">
+                    <label for="fromPrice">From Price:</label>
+                    <select name="fromPrice" id="fromPrice">
+                        <option value="">-- Select --</option>
+                        <option value="0">0</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                        <option value="1500">1500</option>
+                        <option value="2000">2000</option>
+                        <option value="2500">2500</option>
+                        <option value="3000">3000</option>
+                        <option value="10000"> 10000 </option>
+                    </select>
+                    <label for="toPrice">To Price:</label>
+                    <select name="toPrice" id="toPrice">
+                        <option value="">-- Select --</option>
+                        <option value="1000">1000</option>
+                        <option value="2000">2000</option>
+                        <option value="4000">4000</option>
+                        <option value="6000">6000</option>
+                        <option value="8000">8000</option>
+                        <option value="10000">10000</option>
+                        <option value="100000">100000</option>
+                    </select>
+                    <input type="hidden" name="toPriceActual" id="toPriceActual" value="">
+
+                    <label for="colour">Color:</label>
+                    <select name="colour" id="colour">
+                        <option value="">-- Select --</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="red">Red</option>
+                        <option value="green">Green</option>
+                        <option value="blue">Blue</option>
+                        <option value="black">Black</option>
+                        <option value="white">White</option>
+                        <option value="purple">Purple</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <label for="condition">Condition:</label>
+                    <select name="condition" id="condition">
+                        <option value="">-- Select --</option>
+                        <option value="new">New</option>
+                        <option value="used">Used</option>
+                    </select>
+
+                    <button type="submit" >Search</button>
+                </form>
+                </details>
+            </div>
+
             <div class="disc-listing" th:switch="${discs}">
-                <h2 th:case="null">No discs yet...</h2>
+                <h2 th:case="null">No discs found...</h2>
                 <div th:case="*">
                     <div class="card-container">
                         <div th:each="disc : ${discs}" class="card">
