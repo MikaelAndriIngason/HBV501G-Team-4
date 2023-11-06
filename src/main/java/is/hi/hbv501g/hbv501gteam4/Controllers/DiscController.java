@@ -331,4 +331,67 @@ public class DiscController {
             return "redirect:/";
         }
     }
+
+    /**
+     * Filtering and search for the Frisbees.
+     * had problem with the name-search when writing in lower or upper, so I got help from stackoverflow and chatgpt.
+     * In the html it is a form that can be opened or closed on the site.
+     * filters and search while using name, colour, condition and from to price.
+     * If only one is chosen it won't those that were not chosen will not interfeer.
+     * Originally you had to choose all or nothing but I was able to fix that.
+     *
+     * @param fromPrice from what price you want to filter
+     * @param toPrice max price you want
+     * @param colour selection of colours
+     * @param condition used new
+     * @param name name
+     * @param model
+     * @return filtered site
+     */
+
+    @GetMapping("/filter")
+    public String filterDiscs(@RequestParam(value = "fromPrice", required = false) Integer fromPrice,
+                              @RequestParam(value = "toPrice", required = false) Integer toPrice,
+                              @RequestParam(value = "colour", required = false) String colour,
+                              @RequestParam(value = "condition", required = false) String condition,
+                              @RequestParam(value = "name", required = false) String name,
+                              Model model) {
+
+        List<Disc> filteredDiscs = discService.findAll();
+
+        if (name != null && !name.isEmpty()) {
+            List<Disc> nameDiscs = discService.findByNameContainingIgnoreCase(name);
+            if (!nameDiscs.isEmpty()) {
+                filteredDiscs.retainAll(nameDiscs);
+            }
+        }
+
+
+        if (fromPrice != null &&  toPrice != null) {
+            filteredDiscs = discService.findByPrice(fromPrice, toPrice);
+        } else {
+            if (fromPrice != null) {
+               filteredDiscs = discService.findByPrice(fromPrice, Integer.MAX_VALUE);
+            }
+            if (toPrice != null) {
+                filteredDiscs = discService.findByPrice(0, toPrice);
+            }
+        }
+
+        if(colour != null && !colour.isEmpty()) {
+            List<Disc> colourFilteredDiscs = discService.findByColour(colour);
+            if(!colourFilteredDiscs.isEmpty()){
+                filteredDiscs = discService.findByColour(colour);
+            }
+        }
+
+        if(condition != null && !condition.isEmpty()) {
+            List<Disc> conditionFilteredDiscs = discService.findByCondition(condition);
+            if (!conditionFilteredDiscs.isEmpty()) {
+                filteredDiscs.retainAll(conditionFilteredDiscs);
+            }
+        }
+        model.addAttribute("discs", filteredDiscs);
+        return "home";
+    }
 }

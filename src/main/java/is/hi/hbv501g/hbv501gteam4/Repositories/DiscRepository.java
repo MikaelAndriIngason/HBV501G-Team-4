@@ -12,10 +12,13 @@ public interface DiscRepository extends JpaRepository<Disc, Long> {
     List<Disc> findAll();
     Disc findBydiscID(long id);
 
-    List<Disc> findByPriceBetween(int minPrice, int maxPrice);
+    List<Disc> findByPriceBetween(int fromPrice, int toPrice);
     List<Disc> findByColour(String colour);
     List<Disc> findByCondition(String condition);
 
     Disc save(Disc disc);
     void delete(Disc disc);
+
+    //to find the name regardless of upper or lower case or only one or two letters from the name.
+    List<Disc> findByNameContainingIgnoreCase(String partialName);
 }

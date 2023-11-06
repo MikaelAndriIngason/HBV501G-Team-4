@@ -35,6 +35,7 @@ public class DiscServiceImplementation implements DiscService {
     }
 
 
+
     @Override
     public Disc save(Disc disc) {
         return discRepository.save(disc);
@@ -51,8 +52,13 @@ public class DiscServiceImplementation implements DiscService {
     }
 
     @Override
-    public List<Disc> findByPrice(int minPrice, int maxPrice) {
-        return discRepository.findByPriceBetween(minPrice, maxPrice);
+    public List<Disc> findByPrice(int fromPrice, int toPrice) {
+        return discRepository.findByPriceBetween(fromPrice, toPrice);
+    }
+
+    @Override
+    public List<Disc> findByNameContainingIgnoreCase(String partialName) {
+        return discRepository.findByNameContainingIgnoreCase(partialName);
     }
 
     @Override
