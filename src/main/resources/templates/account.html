@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://kit.fontawesome.com/561e814bd5.js" crossorigin="anonymous"></script>
+        <title>Frisbees | Account</title>
+    </head>
+    <body>
+        <header>
+            <h1><a href="/"><i class="fa-solid fa-circle-notch"></i> Frisbees</a></h1>
+
+            <div th:unless="${LoggedInUser == null}" style="display: flex; gap: 1em;">
+                <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
+                <a href="/chat" title="Home"><i class="fa-solid fa-message"></i> Chat</a>
+                <a href="/account" title="Account"><i class="fa-solid fa-user"></i> Account</a>
+                <a href="/logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
+            </div>
+        </header>
+
+        <main>
+            <div class="title-bar">
+                <h1>My account</h1>
+            </div>
+
+            <div class="account-container">
+                <h3>Name</h3>
+                <details>
+                    <summary>Update</summary>
+                    <form th:action="@{/account/changename}" method="post">
+                        <label for="new-name">
+                            <span>New name</span>
+                            <input type="text" id="new-name" name="name" placeholder="New name">
+                        </label>
+                        <input type="submit" value="Update name">
+                    </form>
+                </details>
+            </div>
+
+            <div class="account-container">
+                <h3>Email</h3>
+                <details>
+                    <summary>Update</summary>
+                    <form th:action="@{/account/changeemail}" method="post">
+                        <label for="current-email">
+                            <span>Current Email</span>
+                            <input type="email" id="current-email" name="old-email" placeholder="Current email">
+                        </label>
+                        <label for="new-email">
+                            <span>New Email</span>
+                            <input type="email" id="new-email" name="new-email" placeholder="New Email">
+                        </label>
+                        <input type="submit" value="Update email">
+                    </form>
+                </details>
+            </div>
+
+            <div class="account-container">
+                <h3>Password</h3>
+                <details>
+                    <summary>Update</summary>
+                    <form th:action="@{/account/changepass}" method="post">
+                        <label for="current-pass">
+                            <span>Current password</span>
+                            <input type="password" id="current-pass" name="old-pass" placeholder="Current password">
+                        </label>
+                        <label for="new-pass">
+                            <span>New password</span>
+                            <input type="password" id="new-pass" name="new-pass" placeholder="New password">
+                        </label>
+                        <label for="confirm-pass">
+                            <span>Confirm password</span>
+                            <input type="password" id="confirm-pass" name="confirm-pass" placeholder="Confirm password">
+                        </label>
+                        <input type="submit" value="Update password">
+                    </form>
+                </details>
+            </div>
+
+            <div class="account-container">
+                <h3>Delete account</h3>
+                <details>
+                    <summary>View</summary>
+                    <p>This will permanently delete your account, this action cannot be undone.</p>
+                    <form th:action="@{/account/delete}" method="post">
+                        <label for="pass-delete">
+                            <span>Password</span>
+                            <input type="password" id="pass-delete" name="pass" placeholder="Password">
+                        </label>
+                        <input type="submit" value="Delete account" class="delete-btn">
+                    </form>
+                </details>
+            </div>
+        </main>
+
+        <footer>
+            Hildur Bjarkadóttir, Mikael Andri Ingason, Ragnheiður Þórðardóttir
+            <br>
+            2023 - Háskóli Íslands - HBV501G
+        </footer>
+    </body>
+</html>

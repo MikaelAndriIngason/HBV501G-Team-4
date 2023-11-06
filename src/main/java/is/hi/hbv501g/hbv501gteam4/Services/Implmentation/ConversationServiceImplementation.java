@@ -31,7 +31,4 @@ public class ConversationServiceImplementation implements ConversationService {
     public Conversation save(Conversation conversation) {
         return conversationRepository.save(conversation);
     }
-
-    //@Override
-    //public endConversation()
 }

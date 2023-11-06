@@ -1,6 +1,5 @@
 package is.hi.hbv501g.hbv501gteam4.Controllers;
 
-import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Conversation;
 import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Disc;
 import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Favorite;
 import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Image;
@@ -98,7 +97,6 @@ public class DiscController {
      */
     @RequestMapping(value = "/addDisc", method = RequestMethod.GET)
     public String addDiscGET(Disc disc, Model model) {return "addDisc";}
-
 
     /**
      * adds a disc to the db
@@ -291,7 +289,6 @@ public class DiscController {
         return "discDetails";
     }
 
-
     /**
      * Adds a disc to favorites
      * @param session
@@ -348,7 +345,6 @@ public class DiscController {
      * @param model
      * @return filtered site
      */
-
     @GetMapping("/filter")
     public String filterDiscs(@RequestParam(value = "fromPrice", required = false) Integer fromPrice,
                               @RequestParam(value = "toPrice", required = false) Integer toPrice,

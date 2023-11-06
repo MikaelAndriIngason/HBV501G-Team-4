@@ -4,11 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/styles.css">
-        <title>Log in</title>
+        <script src="https://kit.fontawesome.com/561e814bd5.js" crossorigin="anonymous"></script>
+        <title>Frisbees | Sign in</title>
     </head>
     <body>
-        <main>
-            <h2>Log in</h2>
+        <header>
+            <h1><a href="/"><i class="fa-solid fa-circle-notch"></i> Frisbees</a></h1>
+
+            <a href="/signup" title="Sign up"><i class="fa-solid fa-right-to-bracket"></i> Sign up</a>
+        </header>
+        <main  style="max-width: 40em">
+            <h1>Log in</h1>
 
             <form method="post" action="/login" th:object="${user}">
                 <label for="email-input">
@@ -23,8 +29,13 @@
 
                 <button type="submit" class="form-submit-btn">Log in</button>
 
-                <p>Don't have an account? <a href="/signup">Sign up</a></p>
+                <p style="padding-top: 1em">Don't have an account? <a href="/signup">Sign up</a></p>
             </form>
         </main>
+        <footer>
+            Hildur Bjarkadóttir, Mikael Andri Ingason, Ragnheiður Þórðardóttir
+            <br>
+            2023 - Háskóli Íslands - HBV501G
+        </footer>
     </body>
 </html>

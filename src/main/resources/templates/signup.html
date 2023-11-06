@@ -1,40 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
-    <title>Sign up</title>
-</head>
-<body>
-<main>
-    <h2>Sign up</h2>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://kit.fontawesome.com/561e814bd5.js" crossorigin="anonymous"></script>
+        <title>Frisbees | Sign up</title>
+    </head>
+    <body>
+        <header>
+            <h1><a href="/"><i class="fa-solid fa-circle-notch"></i> Frisbees</a></h1>
 
-    <form method="post" class="user-form" action="/signup" th:object="${user}">
-        <label for="name-input">
-            Name:
-            <input type="text" id="name-input" name="name" required th:field="*{name}">
-        </label>
+            <a href="/login" title="Sign in"><i class="fa-solid fa-right-to-bracket"></i> Sign in</a>
+        </header>
 
-        <label for="email-input">
-            Email:
-            <input type="email" id="email-input" name="email" required th:field="*{email}">
-        </label>
+        <main style="max-width: 40em">
+            <h1>Sign up</h1>
 
-        <label for="password-input">
-            Password:
-            <input type="password" id="password-input" name="password" required th:field="*{password}">
-        </label>
+            <form method="post" class="user-form" action="/signup" th:object="${user}">
+                <label for="name-input">
+                    Name:
+                    <input type="text" id="name-input" name="name" required th:field="*{name}">
+                </label>
 
-        <label for="confirm-password-input">
-            Confirm password:
-            <input type="password" id="confirm-password-input" name="confirm-password" required>
-        </label>
+                <label for="email-input">
+                    Email:
+                    <input type="email" id="email-input" name="email" required th:field="*{email}">
+                </label>
 
-        <button type="submit" class="form-submit-btn">Sign up</button>
+                <label for="password-input">
+                    Password:
+                    <input type="password" id="password-input" name="password" required th:field="*{password}">
+                </label>
 
-        <p>Already have an account? <a href="/login">Sign in</a></p>
-    </form>
-</main>
-</body>
+                <label for="confirm-password-input">
+                    Confirm password:
+                    <input type="password" id="confirm-password-input" name="confirm-password" required>
+                </label>
+
+                <button type="submit" class="form-submit-btn">Sign up</button>
+
+                <p style="padding-top: 1em">Already have an account? <a href="/login">Sign in</a></p>
+            </form>
+        </main>
+        <footer>
+            Hildur Bjarkadóttir, Mikael Andri Ingason, Ragnheiður Þórðardóttir
+            <br>
+            2023 - Háskóli Íslands - HBV501G
+        </footer>
+    </body>
 </html>

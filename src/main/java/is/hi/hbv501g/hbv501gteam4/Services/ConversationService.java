@@ -10,5 +10,4 @@ public interface ConversationService {
     Conversation findByConversationID(long id);
     List<Conversation> findBySellerIdOrBuyerId(long userID);
     Conversation save(Conversation conversation);
-    //void endConversation(Conversation conversation);
 }

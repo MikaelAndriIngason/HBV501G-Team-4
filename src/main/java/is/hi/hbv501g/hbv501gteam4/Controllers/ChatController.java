@@ -28,6 +28,12 @@ public class ChatController {
         this.messageService = messageService;
     }
 
+    /**
+     * Opens up the account page if a user is logged in
+     * @param session the user session
+     * @param model
+     * @return redirects to the chat page if logged in, otherwise to the index page
+     */
     @RequestMapping("/chat")
     public String chatPage(HttpSession session, Model model) {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
@@ -47,7 +53,6 @@ public class ChatController {
             }
         }
 
-
         //Add some data to the Model
         model.addAttribute("conversations", allConversations);
         model.addAttribute("contacts", contacts);
@@ -56,6 +61,13 @@ public class ChatController {
         return "chat";
     }
 
+    /**
+     * Opens up a conversation between two users
+     * @param session the user session
+     * @param conversationId the id of the conversation
+     * @param model
+     * @return displays the conversation
+     */
     @GetMapping("/chat/{id}")
     public String selectConversation(HttpSession session, @PathVariable("id") long conversationId, Model model) {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
@@ -78,7 +90,6 @@ public class ChatController {
                 names.add(userService.findById(message.getSenderID()).getName());
         }
 
-        //model.addAttribute("conversationTitle", selectedConversation.getConversationTitle());
         model.addAttribute("currentConversation", selectedConversation);
         model.addAttribute("conversations", allConversations);
 
@@ -90,6 +101,11 @@ public class ChatController {
         return "chat";
     }
 
+    /**
+     * Ends a conversation between two users
+     * @param conversationId the id of the conversation
+     * @return redirects back to the chat page
+     */
     @GetMapping("/endChat/{conversationId}")
     public String endChat(@PathVariable("conversationId") long conversationId) {
         Conversation conversation = conversationService.findByConversationID(conversationId);
@@ -100,11 +116,23 @@ public class ChatController {
         return "redirect:/chat/" + conversationId;
     }
 
+    /**
+     * Refreshes a conversation to pull new messages (if any)
+     * @param conversationId the id of the conversation
+     * @return redirects to the same page (refresh)
+     */
     @GetMapping("/chat/refresh/{conversationId}")
     public String refreshChat(@PathVariable("conversationId") long conversationId) {
         return "redirect:/chat/" + conversationId;
     }
 
+    /**
+     * Sends a message in a conversation
+     * @param session the user session
+     * @param conversationId the id of the conversation
+     * @param messageText the message
+     * @return redirects to the same page (refresh)
+     */
     @PostMapping("/send-message/{conversationId}")
     public String sendMessage(HttpSession session, @PathVariable("conversationId") long conversationId, @RequestParam("message") String messageText) {
         Conversation conversation = conversationService.findByConversationID(conversationId);
@@ -122,6 +150,13 @@ public class ChatController {
         return "redirect:/";
     }
 
+    /**
+     * Creates a conversation between two users
+     * @param session the user session
+     * @param sellerId the id of the seller
+     * @param title the title of the conversation
+     * @return redirects to the new conversation
+     */
     @GetMapping("/create-conversation/{sellerId}/{title}")
     public String createConversation(HttpSession session, @PathVariable("sellerId") long sellerId, @PathVariable("title") String title) {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
@@ -139,7 +174,7 @@ public class ChatController {
 
     /**
      * Starts a conversation with customer service
-     * @param session session of the user
+     * @param session the user session
      * @return redirects to chats and opens the conversation with Customer Service
      */
     @GetMapping("/create-conversation/customer-service")
