@@ -69,7 +69,7 @@ header a {
 footer {
     background-color: #1e1e1e;
     color: var(--gray);
-    padding: 1em;
+    padding: 2em;
     text-align: center;
 }
 
@@ -509,6 +509,48 @@ a {
     cursor: pointer;
     display: flex;
     align-items: center;
+}
+
+.account-container {
+    margin-bottom: 1em;
+    border: 1px solid #dfdfdf;
+    padding: 1em;
+    border-radius: var(--border-r);
+    background-color: white;
+    box-shadow: 0 0 10px -4px rgba(0,0,0,0.1);
+}
+
+.account-container summary {
+    display: flex;
+    color: var(--accent-color);
+    cursor: pointer;
+}
+
+.account-container form {
+    padding-bottom: 2em;
+}
+
+.account-container label {
+    display: flex;
+    align-items: center;
+}
+
+.account-container span {
+    width: 20%;
+}
+
+.account-container input[type=submit] {
+    padding: 0.75em 1em;
+    border: none;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50px;
+    float: right;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background-color: #c72b2b;
 }
 
 

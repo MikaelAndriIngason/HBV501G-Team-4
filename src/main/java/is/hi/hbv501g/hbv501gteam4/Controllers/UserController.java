@@ -1,7 +1,5 @@
 package is.hi.hbv501g.hbv501gteam4.Controllers;
 
-import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Conversation;
-import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.Disc;
 import is.hi.hbv501g.hbv501gteam4.Persistence.Entities.User;
 import is.hi.hbv501g.hbv501gteam4.Services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -11,9 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-//import io.jsonwebtoken.Jwts;
 
 @Controller
 public class UserController {
@@ -32,10 +27,9 @@ public class UserController {
 
 
     /**
-     * HandleSubmit
-     * Höndlar log-in innskráningu
+     * Handles the user sign in
      * @param user user entity
-     * @return
+     * @return redirects to home page if successful, otherwise index page
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPOST(User user, BindingResult result, Model model, HttpSession session) {
@@ -59,10 +53,9 @@ public class UserController {
     }
 
     /**
-     * handleSubmit
-     * Höndlar sign-up skráningu
+     * Handles the user sign up
      * @param user user entity
-     * @param confirmPassword staðfesting lykilorðs notandans
+     * @param confirmPassword confirmation of password
      * @return
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -93,9 +86,9 @@ public class UserController {
     }
 
     /**
-     * Skráir notandan út
-     * @param session User session
-     * @return Sendir notandan aftur á index
+     * Signs the user out
+     * @param session the user session
+     * @return redirects back to the index page
      */
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
