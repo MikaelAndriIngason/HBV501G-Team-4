@@ -78,7 +78,7 @@ public class Disc {
         return condition;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
