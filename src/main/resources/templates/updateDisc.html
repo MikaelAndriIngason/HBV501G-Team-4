@@ -1,85 +1,100 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/styles.css">
-    <title>Update Disc</title>
-</head>
-<body>
-<main>
-    <h2>Update Disc</h2>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://kit.fontawesome.com/561e814bd5.js" crossorigin="anonymous"></script>
+        <title>Frisbees | Update disc</title>
+    </head>
+    <body>
+        <header>
+            <h1><a href="/"><i class="fa-solid fa-circle-notch"></i> Frisbees</a></h1>
 
-    <form class="user-form" action="#" th:action="@{/updateDisc}" th:object="${disc}" method="post" enctype="multipart/form-data">
-        <input type="text" th:field="*{discID}" id="discID">
-
-        <label for="name">Name:</label>
-        <input type="text" th:field="*{name}" id="name">
-        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-
-        <label for="description">Description:</label>
-        <input type="text" th:field="*{description}" id="description">
-        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-
-        <label for="type">Type:</label>
-        <input type="text" th:field="*{type}" id="type">
-        <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
-
-        <label for="condition">Condition:</label>
-        <select id="condition" th:field="*{condition}">
-            <option value="">-- Select --</option>
-            <option value="new">New</option>
-            <option value="used">Used</option>
-        </select>
-        <span th:if="${#fields.hasErrors('condition')}" th:errors="*{condition}"></span>
-
-        <label for="colour">Colour:</label>
-        <select id="colour" th:field="*{colour}">
-            <option value="">-- Select --</option>
-            <option value="yellow">Yellow</option>
-            <option value="red">Red</option>
-            <option value="green">Green</option>
-            <option value="blue">Blue</option>
-            <option value="black">Black</option>
-            <option value="white">White</option>
-            <option value="purple">Purple</option>
-            <option value="other">Other</option>
-        </select>
-        <span th:if="${#fields.hasErrors('colour')}" th:errors="*{colour}"></span>
-
-        <label for="price">Price:</label>
-        <input type="text" th:field="*{price}" id="price" >
-        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-
-        <div th:switch="${disc.images}">
-            <p th:case="null">No images yet!</p>
-            <div th:case="*">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="image : ${disc.images}">
-                        <td>
-                            <img th:src="${image.image}" alt="Image" style="max-width:300px;"/>
-                        </td>
-                        <td><a th:href="@{/deleteImage/{id}/{imageId}(id=${disc.discID}, imageId=${image.imageID})}">Delete</a></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div th:unless="${LoggedInUser == null}" class="navigation-items">
+                <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
+                <a href="/chat" title="Home"><i class="fa-solid fa-message"></i> Chat</a>
+                <a href="/account" title="Account"><i class="fa-solid fa-user"></i> Account</a>
+                <a href="/logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
             </div>
-        </div>
+        </header>
+        <main>
+            <h2>Update Disc</h2>
 
-        <label for="image">Picture:</label>
-        <input type="file" name="image" id="image" multiple>
+            <form class="user-form" action="#" th:action="@{/updateDisc}" th:object="${disc}" method="post" enctype="multipart/form-data">
+                <input type="text" th:field="*{discID}" id="discID">
+
+                <label for="name">Name:</label>
+                <input type="text" th:field="*{name}" id="name">
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+                <label for="description">Description:</label>
+                <input type="text" th:field="*{description}" id="description">
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+
+                <label for="type">Type:</label>
+                <input type="text" th:field="*{type}" id="type">
+                <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+
+                <label for="condition">Condition:</label>
+                <select id="condition" th:field="*{condition}">
+                    <option value="">-- Select --</option>
+                    <option value="new">New</option>
+                    <option value="used">Used</option>
+                </select>
+                <span th:if="${#fields.hasErrors('condition')}" th:errors="*{condition}"></span>
+
+                <label for="colour">Colour:</label>
+                <select id="colour" th:field="*{colour}">
+                    <option value="">-- Select --</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="red">Red</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
+                    <option value="purple">Purple</option>
+                    <option value="other">Other</option>
+                </select>
+                <span th:if="${#fields.hasErrors('colour')}" th:errors="*{colour}"></span>
+
+                <label for="price">Price:</label>
+                <input type="text" th:field="*{price}" id="price" >
+                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+
+                <div th:switch="${disc.images}">
+                    <p th:case="null">No images yet!</p>
+                    <div th:case="*">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="image : ${disc.images}">
+                                <td>
+                                    <img th:src="${image.image}" alt="Image" style="max-width:300px;"/>
+                                </td>
+                                <td><a th:href="@{/deleteImage/{id}/{imageId}(id=${disc.discID}, imageId=${image.imageID})}">Delete</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <label for="image">Picture:</label>
+                <input type="file" name="image" id="image" multiple>
 
 
 
-        <button type="submit" class="form-submit-btn">Update Disc</button>
-    </form>
-</main>
-
-</body>
+                <button type="submit" class="form-submit-btn">Update Disc</button>
+            </form>
+        </main>
+        <footer>
+            Hildur Bjarkadóttir, Mikael Andri Ingason, Ragnheiður Þórðardóttir
+            <br>
+            2023 - Háskóli Íslands - HBV501G
+        </footer>
+    </body>
 </html>

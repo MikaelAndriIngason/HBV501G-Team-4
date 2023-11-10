@@ -136,7 +136,7 @@ input[type="password"]{
 }
 
 /* Style for select dropdown */
-#condition {
+#condition, #colour {
     border: 1px solid #ccc;
     width: 100%;
     padding: 12px 20px;
@@ -145,7 +145,6 @@ input[type="password"]{
     border-radius: var(--border-r);
     -webkit-appearance: none;
 }
-
 
 a {
     color: var(--accent-color)
@@ -448,6 +447,7 @@ a {
     margin-top: -2em;
     margin-left: -0.5em;
     color: var(--gray);
+    white-space: nowrap;
 }
 
 .ended-chat {
@@ -469,10 +469,18 @@ a {
 }
 
 .filter {
-    padding: 16px;
-
+    padding-bottom: 1em;
 }
 
+.filter details {
+    background-color: #ffffff;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+}
+
+.filter form {
+    padding: 1em;
+}
 
 .filter select {
     border: 1px solid #ccc;
@@ -501,14 +509,14 @@ a {
 }
 
 .filter summary {
-    background-color: var(--accent-color);
+    /*background-color: var(--accent-color);
     color: white;
-    border: 1px solid var(--accent-color);
-    border-radius: var(--border-r);
+    border: 1px solid var(--accent-color);*/
     padding: 10px 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
+    gap: 0.5em;
 }
 
 .account-container {
@@ -553,6 +561,33 @@ a {
     background-color: #c72b2b;
 }
 
+input[type=submit]:disabled {
+    background-color: gainsboro;
+    color: var(--text-color);
+    cursor: auto;
+    border: 1px solid #ccc;
+}
+
+input[type=text]:disabled {
+    background-color: gainsboro;
+}
+
+.navigation-items {
+    display: flex;
+    gap: 1em;
+}
+
+.navigation-items a {
+    color: var(--gray);
+}
+
+.navigation-items a:hover {
+    color: #cdcdcd;
+}
+
+.current-menu {
+    color: white !important;
+}
 
 
 

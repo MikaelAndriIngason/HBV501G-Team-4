@@ -82,12 +82,26 @@ public class ChatController {
 
         List<Message> allMessages = messageService.findByConversationID(conversationId);
 
+        boolean deletedUser = false;
+
         List<String> names = new ArrayList<>();
         for (Message message : allMessages) {
-            if(message.getSenderID() == sessionUser.getId())
+            if(message.getSenderID() == sessionUser.getId()) {
                 names.add("You");
-            else
-                names.add(userService.findById(message.getSenderID()).getName());
+            } else {
+                User user = userService.findById(message.getSenderID());
+                if (user != null) {
+                    names.add(user.getName());
+                } else {
+                    names.add("Deleted user");
+                    deletedUser = true;
+                }
+            }
+        }
+
+        if (deletedUser) {
+            selectedConversation.setConversationEnded(true);
+            conversationService.save(selectedConversation);
         }
 
         model.addAttribute("currentConversation", selectedConversation);

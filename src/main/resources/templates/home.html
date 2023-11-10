@@ -13,8 +13,8 @@
 
             <!--<p th:text="${LoggedInUser.name}"></p>-->
 
-            <div th:unless="${LoggedInUser == null}" style="display: flex; gap: 1em;">
-                <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
+            <div th:unless="${LoggedInUser == null}" class="navigation-items">
+                <a href="/home" title="Home" class="current-menu"><i class="fa-solid fa-home"></i> Home</a>
                 <a href="/chat" title="Chat"><i class="fa-solid fa-message"></i> Chat</a>
                 <a href="/account" title="Account"><i class="fa-solid fa-user"></i> Account</a>
                 <a href="/logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
@@ -31,33 +31,39 @@
 
             <div class="filter" id="filter">
                 <details>
-                <summary>Filter and Search</summary>
+                <summary><i class="fa-solid fa-filter"></i> Search and filter <a th:if="${return != null}" href="/home" style="text-decoration: none; margin-left: auto">Clear search</a></summary>
                 <form action="/filter" method="get">
                     <label for="name">Disc Name:</label>
                     <input type="text" id="name" name="name" placeholder="Enter disc name...">
-                    <label for="fromPrice">From Price:</label>
-                    <select name="fromPrice" id="fromPrice">
-                        <option value="">-- Select --</option>
-                        <option value="0">0</option>
-                        <option value="500">500</option>
-                        <option value="1000">1000</option>
-                        <option value="1500">1500</option>
-                        <option value="2000">2000</option>
-                        <option value="2500">2500</option>
-                        <option value="3000">3000</option>
-                        <option value="10000"> 10000 </option>
-                    </select>
-                    <label for="toPrice">To Price:</label>
-                    <select name="toPrice" id="toPrice">
-                        <option value="">-- Select --</option>
-                        <option value="1000">1000</option>
-                        <option value="2000">2000</option>
-                        <option value="4000">4000</option>
-                        <option value="6000">6000</option>
-                        <option value="8000">8000</option>
-                        <option value="10000">10000</option>
-                        <option value="100000">100000</option>
-                    </select>
+                    <div style="display: flex; gap: 1em">
+                        <div style="flex: 1">
+                            <label for="fromPrice">From Price:</label>
+                            <select name="fromPrice" id="fromPrice">
+                            <option value="">-- Select --</option>
+                            <option value="0">0</option>
+                            <option value="500">500</option>
+                            <option value="1000">1000</option>
+                            <option value="1500">1500</option>
+                            <option value="2000">2000</option>
+                            <option value="2500">2500</option>
+                            <option value="3000">3000</option>
+                            <option value="10000"> 10000 </option>
+                        </select>
+                        </div>
+                        <div style="flex: 1">
+                            <label for="toPrice">To Price:</label>
+                            <select name="toPrice" id="toPrice">
+                            <option value="">-- Select --</option>
+                            <option value="1000">1000</option>
+                            <option value="2000">2000</option>
+                            <option value="4000">4000</option>
+                            <option value="6000">6000</option>
+                            <option value="8000">8000</option>
+                            <option value="10000">10000</option>
+                            <option value="100000">100000</option>
+                        </select>
+                        </div>
+                    </div>
                     <input type="hidden" name="toPriceActual" id="toPriceActual" value="">
 
                     <label for="colour">Color:</label>

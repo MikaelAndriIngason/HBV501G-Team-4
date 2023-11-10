@@ -82,6 +82,9 @@ public class DiscController {
             Disc disc = favorite.getDisc();
             favoriteDiscs.add(disc);
         }
+        if (user != null) {
+            model.addAttribute("LoggedInUser", user);
+        }
 
         //Add some data to the Model
         model.addAttribute("discs", favoriteDiscs);
@@ -96,7 +99,13 @@ public class DiscController {
      * @return the page to add a disc
      */
     @RequestMapping(value = "/addDisc", method = RequestMethod.GET)
-    public String addDiscGET(Disc disc, Model model) {return "addDisc";}
+    public String addDiscGET(Disc disc, Model model) {
+        if (user != null) {
+            model.addAttribute("LoggedInUser", user);
+        }
+
+        return "addDisc";
+    }
 
     /**
      * adds a disc to the db
@@ -129,6 +138,9 @@ public class DiscController {
     public String updateDiscGET(@PathVariable("id") long id, Model model) {
         Disc discToUpdate = discService.findBydiscID(id);
         model.addAttribute("disc", discToUpdate);
+        if (user != null) {
+            model.addAttribute("LoggedInUser", user);
+        }
         return "updateDisc";
     }
 
@@ -387,7 +399,14 @@ public class DiscController {
                 filteredDiscs.retainAll(conditionFilteredDiscs);
             }
         }
+
+        if (user != null) {
+            model.addAttribute("LoggedInUser", user);
+        }
+
         model.addAttribute("discs", filteredDiscs);
+        model.addAttribute("return", true);
+
         return "home";
     }
 }

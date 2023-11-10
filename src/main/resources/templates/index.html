@@ -11,10 +11,10 @@
         <header>
             <h1><a href="/"><i class="fa-solid fa-circle-notch"></i> Frisbees</a></h1>
 
-            <div th:if="${LoggedInUser == null}">
+            <div th:if="${LoggedInUser == null}" class="navigation-items">
                 <a href="/login" title="Sign in"><i class="fa-solid fa-right-to-bracket"></i> Sign in</a>
             </div>
-            <div th:unless="${LoggedInUser == null}" style="display: flex; gap: 1em;">
+            <div th:unless="${LoggedInUser == null}" class="navigation-items">
                 <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
                 <a href="/chat" title="Home"><i class="fa-solid fa-message"></i> Chat</a>
                 <a href="/account" title="Account"><i class="fa-solid fa-user"></i> Account</a>

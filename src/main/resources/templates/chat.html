@@ -11,9 +11,9 @@
         <header>
             <h1><a href="/"><i class="fa-solid fa-circle-notch"></i> Frisbees</a></h1>
 
-            <div th:unless="${LoggedInUser == null}" style="display: flex; gap: 1em;">
+            <div th:unless="${LoggedInUser == null}" class="navigation-items">
                 <a href="/home" title="Home"><i class="fa-solid fa-home"></i> Home</a>
-                <a href="/chat" title="Home"><i class="fa-solid fa-message"></i> Chat</a>
+                <a href="/chat" title="Home" class="current-menu"><i class="fa-solid fa-message"></i> Chat</a>
                 <a href="/account" title="Account"><i class="fa-solid fa-user"></i> Account</a>
                 <a href="/logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
             </div>
